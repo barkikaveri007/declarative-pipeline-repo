@@ -12,7 +12,6 @@ pipeline{
         stage('BRANCH_NAME'){
             steps{
             script{
-                fetch 
                  echo "Current branch: ${env.GIT_BRANCH}"
             }
             }
