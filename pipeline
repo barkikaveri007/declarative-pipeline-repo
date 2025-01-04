@@ -2,15 +2,19 @@ pipeline{
     agent any
     stages{
         stage('CHECKOUT'){
+            steps{
             script{
                  checkout scm
 
             }
+            }
         }
         stage('BRANCH_NAME'){
+            steps{
             script{
                 fetch 
                  echo "Current branch: ${env.GIT_BRANCH}"
+            }
             }
         }
 
