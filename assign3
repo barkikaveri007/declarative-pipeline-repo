@@ -1,0 +1,14 @@
+pipeline{
+    agent {label 'slave_node1'}
+    triggers{
+        gitpush()
+    }
+    stages{
+        stage('build'){
+        steps{
+            echo "build triggered"
+        }               
+            
+        }
+    }
+}
