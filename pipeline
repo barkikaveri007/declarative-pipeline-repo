@@ -1,17 +1,21 @@
 pipeline{
     agent any
     stages{
-        stage('job1'){
+        stage('CHECKOUT'){
             steps{
-               sh  'exit 1'
-                echo "This is job1"
+            script{
+                 checkout scm
+
+            }
             }
         }
-        stage('job2'){
+        stage('BRANCH_NAME'){
             steps{
-                echo "This is  job2"
+            script{
+                 echo "Current branch: ${env.GIT_BRANCH}"
+            }
             }
         }
-        
+
     }
 }
