@@ -1,19 +1,49 @@
-pipeline{
+//Create a pipeline job that executes every 15 minutes. Include build stages that.Echo the current time.Display the last build status.
+pipeline {
     agent any
-    triggers{
-         pollSCM('*/15 * * * *')
+    triggers {
+        pollSCM('*/15 * * * *')  // Every 15 minutes
     }
-    stages{
-        stage('Time'){
-            steps{
-            sh 'echo "Current time: $(date +'%Y-%m-%d %H:%M:%S')"'
+    stages {
+        stage('Time') {
+            steps {
+                script {
+                    sh '''
+                        #!/bin/bash
+                        echo "Current time: $(date +'%Y-%m-%d %H:%M:%S')"
+                    '''
+                }
+            }
         }
-        }
-        post{
-            always{
-                echo "Build status: ${currentBuild.result}"
+    }
+    post {
+        always {
+            script {
+                // Access the last build status
+                def lastBuildStatus = currentBuild.result
+                echo "Last build status: ${lastBuildStatus ? lastBuildStatus : 'Not available'}"
             }
         }
     }
 }
-
+or
+pipeline {
+    agent any
+    triggers {
+        pollSCM('*/15 * * * *')  // Every 15 minutes
+    }
+    stages {
+        stage('Time') {
+            steps {
+                script {
+                    sh 'echo "Current time: $(date +\'%Y-%m-%d %H:%M:%S\')"'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo "Last build status: ${currentBuild.result ?: 'Not available'}"
+        }
+    }
+}
