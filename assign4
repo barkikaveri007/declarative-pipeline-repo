@@ -1,0 +1,19 @@
+pipeline{
+    agent any
+    triggers{
+         pollSCM('*/15 * * * *')
+    }
+    stages{
+        stage('Time'){
+            steps{
+            sh 'echo "Current time: $(date +'%Y-%m-%d %H:%M:%S')"'
+        }
+        }
+        post{
+            always{
+                echo "Build status: ${currentBuild.result}"
+            }
+        }
+    }
+}
+
